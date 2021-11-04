@@ -18,7 +18,7 @@ def try_login(url, user, passwd):
         return False
 
 def log_result(result, url):
-    logging.basicConfig(filename=url, filemode='a', level=logging.DEBUG)
+    logging.basicConfig(filename=url, filemode='w', level=logging.DEBUG)
     logging.info(result)
 
 if __name__ == '__main__':
