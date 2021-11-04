@@ -5,14 +5,17 @@
 __author__  = "Christian Glöckner"
 __licence__ = "MIT"
 
-import requests, sys, logging
+import requests, json, sys, logging
 
 def try_login(url, user, passwd):
     try:
-        res = requests.get(url, auth=(user, passwd))
+        r = requests.post(url, json={'userName': user, 'password': passwd})
+        try:
+            return 'securityToken' in json.loads(r.text)
+        except json.decoder.JSONDecodeError as error:
+            return False
     except requests.exceptions.ConnectionError as error:
         return False
-    return True
 
 def log_result(result, url):
     logging.basicConfig(filename=url, filemode='a', level=logging.DEBUG)
